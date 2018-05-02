@@ -2,7 +2,11 @@ import { Matrix } from './matrix';
 import { config } from './options';
 
 export class App {
+  alertType: 'warning' | 'danger';
+
   run(): void {
+    this.alertType = 'danger';
+
     let config = 10;
     console.log(config);
     let result = this.calculate(false, 0);
