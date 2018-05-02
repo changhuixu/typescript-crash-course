@@ -6,35 +6,26 @@ import { BadgeStatistics } from './models/badge-statistics';
 import { MFK } from './models/mfk';
 
 export class App {
-  readonly assignments: DrivingAssignment[];
+  readonly assignments: DrivingAssignment[] = [];
 
   constructor(private readonly daService: DrivingAssignmentsService) {
-    this.assignments = this.daService.getDrivingAssignments();
+    this.daService.getDrivingAssignments();
+    this.assignments = this.daService.assignments; // shallow
+    //Object.assign(this.assignments, this.daService.assignments); //deep
+    //this.assignments = [...this.daService.assignments]; // deep
+    //this.assignments = Object.assign([], this.daService.assignments); // deep
   }
 
   run(): void {
-    const mfk1 = new MFK('050', '03', '0100');
-    //let mfk2 = mfk1;
-    let mfk2 = new MFK('', '', '');
-    Object.assign(mfk2, mfk1);
+    console.log(`local: ${this.assignments[6].status} origin: ${this.daService.assignments[6].status}`);
+    this.assignments[6].status = DrivingAuthorizationStatus.NotAuthorized;
+    console.log(`local: ${this.assignments[6].status} origin: ${this.daService.assignments[6].status}`);
 
-    console.log(`${JSON.stringify(mfk1)}\t${JSON.stringify(mfk2)}`);
-    mfk1.fund = '010';
-    console.log(`${JSON.stringify(mfk1)}\t${JSON.stringify(mfk2)}`);
-    mfk2.fund = '150';
-    console.log(`${JSON.stringify(mfk1)}\t${JSON.stringify(mfk2)}`);
+    this.daService.updateStatus(7, 4);
+    console.log(`local: ${this.assignments[6].status} origin: ${this.daService.assignments[6].status}`);
 
-    const a = [1, 2, 3];
-    //let b = a;    // shallow
-    let b: number[] = [];
-    // Object.assign(b, a); // deep
-    //b = [...a];
-    b = Object.assign([], a); // deep
-
-    console.log(`${a}\t${b}`);
-    a[0] = 0;
-    console.log(`${a}\t${b}`);
-    b[0] = 6;
-    console.log(`${a}\t${b}`);
+    this.assignments.push(new DrivingAssignment(8, 9, 'ch', 'ds', 'as', 3, true,'c', new Date(), 1));
+    console.log(this.assignments.length);
+    console.log(this.daService.assignments.length);
   }
 }
