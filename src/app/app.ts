@@ -27,5 +27,14 @@ export class App {
     this.assignments.push(new DrivingAssignment(8, 9, 'ch', 'ds', 'as', 3, true,'c', new Date(), 1));
     console.log(this.assignments.length);
     console.log(this.daService.assignments.length);
+
+    const {status} = this.assignments[6];
+    console.log(status);
+
+    const [first] = this.assignments;
+    console.log(first);
+
+    const [,, ...more] = this.assignments;
+    console.log(more.length);
   }
 }
