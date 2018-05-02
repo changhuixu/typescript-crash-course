@@ -14,4 +14,19 @@ export class DrivingAssignment {
     public createdAt: Date,
     public status: DrivingAuthorizationStatus
   ) {}
+
+  static cast(obj: DrivingAssignment): DrivingAssignment {
+    return new DrivingAssignment(
+      obj.id,
+      obj.driverId,
+      obj.driverName,
+      obj.hawkId,
+      obj.orgDept,
+      obj.demographic,
+      obj.isRequiredToDrive,
+      obj.createdBy,
+      obj.createdAt,
+      obj.status
+    );
+  }
 }

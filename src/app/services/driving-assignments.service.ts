@@ -89,6 +89,7 @@ export class DrivingAssignmentsService {
       status: 1
     }
   ];
+  assignments: DrivingAssignment[];
 
   public readonly reducer = (acc: BadgeStatistics, cur: DrivingAssignment) => {
     if (cur.status === DrivingAuthorizationStatus.Authorized) {
@@ -102,6 +103,12 @@ export class DrivingAssignmentsService {
   };
 
   getDrivingAssignments(): DrivingAssignment[] {
+    this.assignments = this.apiResponse.map(x => DrivingAssignment.cast(x));
     return this.apiResponse;
+  }
+
+  updateStatus(id: number, newStatus: DrivingAuthorizationStatus): void {
+    let assignment = this.assignments.find(x => x.id === id);
+    assignment.status = newStatus;
   }
 }
