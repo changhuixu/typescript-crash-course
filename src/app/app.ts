@@ -3,39 +3,20 @@ import { Demographic } from './models/demographic.enum';
 import { DrivingAuthorizationStatus } from './models/driving-authorization-status.enum';
 import { DrivingAssignmentsService } from './services/driving-assignments.service';
 import { BadgeStatistics } from './models/badge-statistics';
+import { MfkFieldOption } from './models/mfk-field-option';
 
 export class App {
-  private readonly drivingAssignmentService = new DrivingAssignmentsService();
-
   run(): void {
-    let assignments = this.drivingAssignmentService.getDrivingAssignments();
-    //console.log(assignments);
-
-    // foreach ===> LINQ.ForEach
-    //assignments.forEach(x => console.log(x.hawkId));
-    // find ===> LINQ.FirstOrDefault
-    console.log(assignments.find(x => x.orgDept === '05-0333'));
-    console.log(assignments.find((_, i) => i === 1));
-    // every ==> LINQ.All
-    console.log(
-      assignments.every(x => x.status === DrivingAuthorizationStatus.Authorized)
-    );
-    // some ===> LINQ.Any
-    console.log(
-      assignments.some(x => x.status === DrivingAuthorizationStatus.Authorized)
-    );
-    // fileter ===> LINQ.Where
-    let requiredAssignments = assignments.filter(x => x.isRequiredToDrive);
-    let notRequiredAssignments = assignments.filter(x => !x.isRequiredToDrive);
-    console.log(requiredAssignments.length);
-    console.log(notRequiredAssignments.length);
-    // map ===> LINQ.Select
-    console.log(requiredAssignments.map(x => x.status));
-
-    // reduce
-    let badge1 = requiredAssignments.reduce(this.drivingAssignmentService.reducer, BadgeStatistics.Default());
-    let badge2 = notRequiredAssignments.reduce(this.drivingAssignmentService.reducer, BadgeStatistics.Default());
-    console.log(badge1);
-    console.log(badge2);
+    const defaultOptions = [
+      new MfkFieldOption('1', 1),
+      new MfkFieldOption('2', 2),
+      new MfkFieldOption('3', 3),
+      new MfkFieldOption('4', 4),
+      new MfkFieldOption('5', 5),
+      new MfkFieldOption('6', 6)
+    ];
+    let newOption: MfkFieldOption[] = [new MfkFieldOption('7', 2), new MfkFieldOption('1', 3)];
+    let result = Object.assign([], defaultOptions, newOption);
+    console.log(result);
   }
 }
