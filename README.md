@@ -1,6 +1,8 @@
 # Typescript Crash Course
 
-Dependencies: node 8+, webpack 4+, typescript 2+
+Dependencies: node 10+, webpack 4+, typescript 2+
+
+Check out sub branches to view different topics in TypeScript.
 
 ## Usage
 
